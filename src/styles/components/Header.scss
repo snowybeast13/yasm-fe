@@ -1,0 +1,27 @@
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 303px;
+  height: 64px;
+  box-shadow: 0px 1px 0px $gray-200-color;
+
+  &__LeftSideWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90px;
+  }
+}
+@media (max-width: $big-breakpoint) {
+  .Header {
+    padding: 0 150px;
+  }
+}
+@media (max-width: $small-breakpoint) {
+  .Header {
+    padding: 0 40px;
+  }
+}
