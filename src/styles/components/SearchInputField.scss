@@ -1,19 +1,46 @@
-.InputWrap {
-  width: 100%;
-  max-width: 584px;
-  margin: 0 auto;
-  margin-top: 20%;
+.input-wrap {
+  max-width: 700px;
+  margin: 10% auto 0;
+  display: flex;
+  align-items: center;
+  position: relative;
   &__input-field {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     padding: 8px 12px 8px 24px;
-    // gap: 462px;
     width: 100%;
     height: 48px;
     border: 1px solid #ececec;
     box-shadow: 0px 3px 8px rgb(0 0 0 / 10%);
     border-radius: $border-radius-input;
+    transition: box-shadow 0.3s ease-in-out;
+    font-size: $text-16px;
+    color: $gray-600-color;
   }
+  &__input-field:focus-visible {
+    outline: none;
+    box-shadow: 0 7px 8px -5px $primary-green-color;
+  }
+  &__button {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: $primary-green-color;
+    right: 20px;
+    cursor: pointer;
+    &--icon {
+      height: 20px;
+      width: 20px;
+      display: block;
+      margin: auto;
+      background-image: url(../../assets/SearchIcon.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+}
+.info-text {
+  text-align: center;
+  color: $gray-600-color;
+  margin-top: 24px;
 }
