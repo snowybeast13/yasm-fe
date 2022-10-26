@@ -3,17 +3,17 @@ import React, { FC } from "react";
 const SearchInputField: FC = (): JSX.Element => {
   return (
     <div>
-      <div className="InputWrap">
+      <div className="input-wrap">
         <input
-          className="InputWrap__input-field"
+          className="input-wrap__input-field"
           type="text"
           placeholder="Search"
         />
-        <button className="InputWrap__Button">
-          <span className="InputWrap__Button--icon"></span>
+        <button className="input-wrap__button">
+          <span className="input-wrap__button--icon"></span>
         </button>
       </div>
-      <p className="InfoText">
+      <p className="info-text">
         Hit ENTER to search for your desired skill, employee, organization and
         more
       </p>
