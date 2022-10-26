@@ -9,10 +9,7 @@ function App(): JSX.Element {
     <div className="App">
       <Header />
       <SearchInputField />
-      <footer>
       <Footer />
-
-      </footer>
     </div>
   );
 }
