@@ -5,10 +5,10 @@ import Avatar from "../Avatar/Avatar";
 
 const Header: FC = (): JSX.Element => {
   return (
-    <div className="Header">
-      <img src={logo} alt="Logo" className="Header__Logo" />
-      <div className="Header__LeftSideWrapper">
-        <img src={adminIcon} alt="AdminIcon" className="Header__AdminIcon" />
+    <div className="header">
+      <img src={logo} alt="Logo" className="header__logo" />
+      <div className="header__left-side-wrapper">
+        <img src={adminIcon} alt="AdminIcon" className="header__admin-icon" />
         <Avatar />
       </div>
     </div>
