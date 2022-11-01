@@ -25,13 +25,26 @@
     &--chip {
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       padding: 5px 8px 5px 12px;
       background-color: $gray-200-color;
       border-radius: 24px;
       margin: 0 10px 0 0;
       white-space: nowrap;
+      gap: 10px;
+      p {
+        margin: 5px 12px;
+      }
+      button {
+        background-image: url(../../assets/Close_circle.png);
+        height: 20px;
+        width: 20px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+      }
     }
 
     &__input-field {
@@ -65,29 +78,62 @@
       background-repeat: no-repeat;
     }
   }
+  &__clear-button {
+    position: absolute;
+    right: 74px;
+    background-image: url(../../assets/clear2.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 15px;
+    border: none;
+    background-color: transparent;
+    top: 27px;
+    cursor: pointer;
+    &:hover {
+      background-image: url(../../assets/clear.png);
+    }
+  }
 }
 .info-text {
   text-align: center;
   color: $gray-600-color;
   margin-top: 24px;
 }
-.select-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
-  margin: 0 auto;
-  padding: 24px;
-  width: 700px;
-  border: 1px solid #ecececec;
-  background: white;
-  font-size: 16px;
-  border-radius: 10px;
-  gap: 10px;
-  &__items {
-    background: #ececec;
-    padding: 5px 12px;
-    border-radius: 24px;
-    cursor: pointer;
+
+.select {
+  position: relative;
+
+  &__select-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    padding: 24px;
+    width: 650px;
+    border: 1px solid $gray-200-color;
+    background: $base-color;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgb(0 0 0 / 10%);
+    gap: 14px;
+    overflow: auto;
+    height: 380px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    &__items {
+      background: $gray-200-color;
+      padding: 5px 12px;
+      border-radius: 24px;
+      cursor: pointer;
+      p {
+        margin: 5px 12px;
+      }
+    }
+    h3 {
+      color: $gray-600-color;
+    }
   }
 }
