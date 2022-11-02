@@ -75,6 +75,8 @@ const SearchInputField: FC<PersonProps> = ({
 
   return (
     <div>
+      {/* SEARCH INPUT FIELD */}
+
       <div className="input-wrap">
         <div className="input-wrap__input-div">
           {inputValue && (
@@ -116,6 +118,8 @@ const SearchInputField: FC<PersonProps> = ({
         )}
       </div>
 
+      {/* DROPDOWN SELECT */}
+
       {view && (
         <div className="select">
           <div ref={ref} className="select__select-wrapper">
@@ -143,12 +147,12 @@ const SearchInputField: FC<PersonProps> = ({
           </div>
         </div>
       )}
+
       <p className="info-text">
         Hit ENTER to search for your desired skill, employee, organization and
         more
       </p>
-      {/* Person component goes here */}
-      <div></div>
+      <div> {/* Person component goes here */}</div>
     </div>
   );
 };

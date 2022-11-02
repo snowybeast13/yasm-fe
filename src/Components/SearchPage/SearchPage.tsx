@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import data from "../../../../yasm-fe/src/data/persons.json";
+import data from "../../data/persons.json";
 import SearchInputField from "../Search/SearchInputField";
 import { Employee, IResponse } from "../../Models/interfaces";
 
