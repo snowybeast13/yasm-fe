@@ -117,24 +117,30 @@ const SearchInputField: FC<PersonProps> = ({
       </div>
 
       {view && (
-        <div ref={ref} className="select">
-          {personType.length ? (
-            <div className="select__select-wrapper">
-              {personType.map((filteredPersons) => (
-                <div
-                  key={filteredPersons.id}
-                  className="select__select-wrapper__items"
-                  onClick={() => setUserInput(filteredPersons)}
-                >
-                  <p>{filteredPersons.name}</p>
+        <div className="select">
+          <div ref={ref} className="select__select-wrapper">
+            {personType.length ? (
+              <div>
+                <div className="select__select-wrapper__label">
+                  <span></span>
+                  <p>PERSON</p>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="select__select-wrapper">
+                <div className="select__select-wrapper__items-wrapper">
+                  {personType.map((filteredPersons) => (
+                    <div
+                      key={filteredPersons.id}
+                      className="select__select-wrapper__items-wrapper__items"
+                      onClick={() => setUserInput(filteredPersons)}
+                    >
+                      <p>{filteredPersons.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
               <h3>No options</h3>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
       <p className="info-text">

@@ -103,12 +103,7 @@
 
 .select {
   position: relative;
-
   &__select-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
     margin: 0 auto;
     padding: 24px;
     width: 650px;
@@ -117,19 +112,44 @@
     font-size: 16px;
     border-radius: 10px;
     box-shadow: 0px 3px 8px rgb(0 0 0 / 10%);
-    gap: 14px;
     overflow: auto;
-    height: 380px;
+    max-height: 380px;
+    height: auto;
     position: absolute;
     left: 0;
     right: 0;
-    &__items {
-      background: $gray-200-color;
-      padding: 5px 12px;
-      border-radius: 24px;
-      cursor: pointer;
+    &__label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+      span {
+        background-image: url(../../assets/Person.png);
+        height: 20px;
+        width: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
       p {
-        margin: 5px 12px;
+        color: $gray-600-color;
+        font-weight: bold;
+      }
+    }
+    &__items-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      height: auto;
+      &__items {
+        background: $gray-200-color;
+        padding: 5px 12px;
+        border-radius: 24px;
+        cursor: pointer;
+        p {
+          margin: 5px 12px;
+        }
       }
     }
     h3 {
