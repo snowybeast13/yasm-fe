@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import data from "../../../src/data/persons.json";
+import data from "../../data/persons.json";
 import SearchInputField from "../Search/SearchInputField";
-import { Employee, Response } from "../../Models/interfaces";
+import { Employee, IResponse } from "../../Models/interfaces";
 
 const SearchPage = () => {
   const [persons, setPersons] = useState<Employee[]>([]);
 
   useEffect(() => {
-    const allData: Employee[] = (data as Response).persons;
+    const allData: Employee[] = (data as IResponse).persons;
     setPersons(allData);
   }, []);
 
