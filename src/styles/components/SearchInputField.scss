@@ -1,19 +1,159 @@
-.InputWrap {
-  width: 100%;
-  max-width: 584px;
-  margin: 0 auto;
-  margin-top: 20%;
-  &__input-field {
+.input-wrap {
+  max-width: 700px;
+  margin: 10% auto 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  &__input-div {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     padding: 8px 12px 8px 24px;
-    // gap: 462px;
     width: 100%;
     height: 48px;
-    border: 1px solid #ececec;
+    border: 1px solid $gray-200-color;
     box-shadow: 0px 3px 8px rgb(0 0 0 / 10%);
     border-radius: $border-radius-input;
+    transition: box-shadow 0.3s ease-in-out;
+    font-size: $text-16px;
+    color: $gray-600-color;
+
+    &__chip-wrapper {
+      display: flex;
+    }
+
+    &--chip {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 8px 5px 12px;
+      background-color: $gray-200-color;
+      border-radius: 24px;
+      margin: 0 10px 0 0;
+      white-space: nowrap;
+      gap: 10px;
+      p {
+        margin: 5px 12px;
+      }
+      button {
+        background-image: url(../../assets/Close_circle.png);
+        height: 20px;
+        width: 20px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    &__input-field {
+      border: none;
+      font-size: $text-16px;
+      width: 100%;
+      height: inherit;
+    }
+
+    &__input-field:focus-visible {
+      outline: none;
+    }
+  }
+
+  &__button {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: $primary-green-color;
+    right: 20px;
+    cursor: pointer;
+    &--icon {
+      height: 20px;
+      width: 20px;
+      display: block;
+      margin: auto;
+      background-image: url(../../assets/SearchIcon.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+  &__clear-button {
+    position: absolute;
+    right: 74px;
+    background-image: url(../../assets/clear2.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 15px;
+    border: none;
+    background-color: transparent;
+    top: 27px;
+    cursor: pointer;
+    &:hover {
+      background-image: url(../../assets/clear.png);
+    }
+  }
+}
+.info-text {
+  text-align: center;
+  color: $gray-600-color;
+  margin-top: 24px;
+}
+
+.select {
+  position: relative;
+  &__select-wrapper {
+    margin: 0 auto;
+    padding: 24px;
+    width: 650px;
+    border: 1px solid $gray-200-color;
+    background: $base-color;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgb(0 0 0 / 10%);
+    overflow: auto;
+    max-height: 380px;
+    height: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    &__label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+      span {
+        background-image: url(../../assets/Person.png);
+        height: 20px;
+        width: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      p {
+        color: $gray-600-color;
+        font-weight: bold;
+      }
+    }
+    &__items-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      height: auto;
+      &__items {
+        background: $gray-200-color;
+        padding: 5px 12px;
+        border-radius: 24px;
+        cursor: pointer;
+        p {
+          margin: 5px 12px;
+        }
+      }
+    }
+    h3 {
+      color: $gray-600-color;
+    }
   }
 }
