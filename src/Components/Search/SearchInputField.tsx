@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { Employee, Person } from "../../Models/interfaces";
+import PersonCard from "../Person/Person";
 
 interface PersonProps {
   persons: Employee[];
@@ -28,7 +29,7 @@ const SearchInputField: FC<PersonProps> = ({
     );
     if (debouncedSearch) {
       setPersonType(filter);
-      console.log(filter);
+      // console.log(filter);
     } else {
       setPersonType([]);
     }
@@ -40,12 +41,16 @@ const SearchInputField: FC<PersonProps> = ({
     newData.push(...inputValue, fPerson);
     setInputValue(newData);
 
+    console.log(inputValue);
+
     //When clicked on chip, remove it from the list
     setPersonType(
       personType.filter((p) => {
         return p.id !== fPerson.id;
       })
     );
+
+    setView(false);
 
     //Clear input field after chip is added
     inputRef.current.value = "";
@@ -104,11 +109,7 @@ const SearchInputField: FC<PersonProps> = ({
             onChange={(e) => setSearch(e.target.value)}
             onClick={() => setView(true)}
           />
-        </div>
-        <button className="input-wrap__button">
-          <span className="input-wrap__button--icon"></span>
-        </button>
-        {inputValue.length !== 0 && (
+            {inputValue.length !== 0 && (
           <div>
             <button
               className="input-wrap__clear-button"
@@ -116,6 +117,11 @@ const SearchInputField: FC<PersonProps> = ({
             ></button>
           </div>
         )}
+        </div>
+        <button className="input-wrap__button">
+          <span className="input-wrap__button--icon"></span>
+        </button>
+      
       </div>
 
       {/* DROPDOWN SELECT */}
@@ -152,7 +158,9 @@ const SearchInputField: FC<PersonProps> = ({
         Hit ENTER to search for your desired skill, employee, organization and
         more
       </p>
-      <div> {/* Person component goes here */}</div>
+      <div>
+        <PersonCard inputValue={inputValue} />
+      </div>
     </div>
   );
 };
