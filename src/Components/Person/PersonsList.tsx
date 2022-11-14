@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Person } from "../../Models/interfaces";
 import experienceIcon from "../../assets/Work_experience.png";
 import locationIcon from "../../assets/Location.png";
 import languagesIcon from "../../assets/Languages.png";
-import PersonDetailsCard from "./PersonDetailsCard";
+// import PersonDetailsCard from "./PersonDetailsCard";
 
 interface InputValueProps {
   userInfo: Person;
