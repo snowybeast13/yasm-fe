@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import data from "../../data/persons.json";
+// import data from "../../data/persons.json";
+import emptyData from "../../data/emptyPersons.json"
 import SearchInputField from "../Search/SearchInputField";
 import { Employee, IResponse, Person } from "../../Models/interfaces";
 import useDebounce from "../../hooks/useDebounce";
@@ -24,7 +25,7 @@ const SearchPage = () => {
 
   //Get all persons
   useEffect(() => {
-    const allData: Employee[] = (data as IResponse).persons;
+    const allData: Employee[] = (emptyData as IResponse).persons;
     setPersons(allData);
   }, []);
 
@@ -85,11 +86,11 @@ const SearchPage = () => {
     personType.push(value);
     setSearch(search);
 
-    setCard(
+    card ? setCard(
       card.filter((userCard) => {
         return userCard.id !== value.id;
       })
-    );
+    ) : setCard([])
   };
 
   //Clear data from input
@@ -101,12 +102,13 @@ const SearchPage = () => {
     });
     personType.push(...returnPersonToArr);
     setSearch("");
+    setCard([])
   };
 
   //Open details card
   const cardHandler = (userInfo: Person) => {
     console.log("card handler clicked", userInfo);
-    setCard([userInfo]);
+    card ? setCard([userInfo]) : setCard([]);
   };
 
   //Close card
@@ -121,6 +123,7 @@ const SearchPage = () => {
 
   return (
     <div className="search-holder">
+      {/* //Input Field component */}
       <SearchInputField
         persons={persons}
         onChangeSearch={onChangeSearch}
@@ -130,6 +133,8 @@ const SearchPage = () => {
         clearInputData={clearInputData}
         search={search}
       />
+
+      {/* //Dropdown results component */}
       <div ref={ref}>
         {view && (
           <ResultsDropdown
@@ -138,19 +143,34 @@ const SearchPage = () => {
           />
         )}
       </div>
-      <div className="list-wrapper">
-        <div className="persons-wrapper">
-          {inputValue.map((userCard) => (
-            <PersonsList
-              userInfo={userCard}
-              cardHandler={cardHandler}
-              key={userCard.id}
-            />
-          ))}
-        </div>
 
-        {card.map((singleCard) => (
-          <PersonDetailsCard card={singleCard} closeCard={closeCard} />
+      {/* List and details card */}
+      <div className="list">
+        {inputValue.map((singleEl) => (
+          <div key={singleEl.id} className="list__list-wrapper">
+            <div className="list__single-card-wrapper">
+              <PersonsList
+                userInfo={singleEl}
+                cardHandler={cardHandler}
+                key={singleEl.id}
+              />
+            </div>
+            {card.length !== 0 && (
+              <div className="list__details-card-wrapp">
+                {card.map((cardSingle) => (
+                  <div>
+                    {singleEl.id === cardSingle.id && (
+                      <PersonDetailsCard
+                        card={singleEl}
+                        closeCard={closeCard}
+                        key={cardSingle.id}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>

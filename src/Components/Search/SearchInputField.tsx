@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC } from "react";
 import { Employee, Person } from "../../Models/interfaces";
-import PersonCard from "../Person/PersonsList";
 
 interface PersonProps {
   persons: Employee[];
@@ -68,7 +67,6 @@ const SearchInputField: FC<PersonProps> = ({
         Hit ENTER to search for your desired skill, employee, organization and
         more
       </p>
-      <div>{/* <PersonCard inputValue={inputValue} /> */}</div>
     </div>
   );
 };

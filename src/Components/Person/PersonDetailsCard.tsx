@@ -13,7 +13,7 @@ const PersonDetailsCard: FC<CardProps> = ({ card, closeCard }: CardProps) => {
         <div className="details-box" key={card.id}>
           {/* Skills */}
           <div className="details-box__skills">
-            <p>Skills</p>
+            <h3>Skills</h3>
             <button
               className="details-box__close"
               onClick={() => closeCard(card)}
@@ -64,7 +64,7 @@ const PersonDetailsCard: FC<CardProps> = ({ card, closeCard }: CardProps) => {
                 <h3>Onsite ratio</h3>
                 {card.onsiteRatio && <p>{card.onsiteRatio}</p>}
               </div>
-              <div>
+              <div className="details-box__btn-wrapper">
                 <button className="details-box__btn">
                   Detail page<span className="details-box__btn--arrow"></span>
                 </button>
