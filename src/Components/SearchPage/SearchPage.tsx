@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 // import data from "../../data/persons.json";
-import emptyData from "../../data/emptyPersons.json"
+import emptyData from "../../data/emptyPersons.json";
 import SearchInputField from "../Search/SearchInputField";
 import { Employee, IResponse, Person } from "../../Models/interfaces";
 import useDebounce from "../../hooks/useDebounce";
@@ -45,19 +45,17 @@ const SearchPage = () => {
 
   //Set search state
   const onChangeSearch = (searchValue: string) => {
-    console.log(searchValue);
     setSearch(searchValue);
   };
 
   //Set user input
   const setUserInput = (user: Person) => {
-    // console.log("User input");
     const newData = [];
     newData.push(...inputValue, user);
     setInputValue(newData);
     setView(false);
 
-    //  When clicked on chip, remove it from the list
+    //When clicked on chip, remove it from the list
     setPersonType(
       personType.filter((p) => {
         return p.id !== user.id;
@@ -67,15 +65,11 @@ const SearchPage = () => {
 
   //Hide select dropdown when clicked outside
   const viewHandler = (value: boolean) => {
-    // console.log("view handler clicked");
     setView(value);
   };
 
-  //
-
   //Remove Chip
   const removeChip = (value: Person) => {
-    // console.log("remove chip clicked ", value);
     setInputValue(
       inputValue.filter((singlePerson) => {
         return singlePerson.id !== value.id;
@@ -86,34 +80,33 @@ const SearchPage = () => {
     personType.push(value);
     setSearch(search);
 
-    card ? setCard(
-      card.filter((userCard) => {
-        return userCard.id !== value.id;
-      })
-    ) : setCard([])
+    card
+      ? setCard(
+          card.filter((userCard) => {
+            return userCard.id !== value.id;
+          })
+        )
+      : setCard([]);
   };
 
   //Clear data from input
   const clearInputData = (value: Person[]) => {
-    // console.log("cleared from input ", value);
     setInputValue([]);
     const returnPersonToArr = value.filter((rPerson) => {
       return rPerson;
     });
     personType.push(...returnPersonToArr);
     setSearch("");
-    setCard([])
+    setCard([]);
   };
 
   //Open details card
   const cardHandler = (userInfo: Person) => {
-    console.log("card handler clicked", userInfo);
     card ? setCard([userInfo]) : setCard([]);
   };
 
   //Close card
   const closeCard = (singleCard: Person) => {
-    console.log("close card clicked", card);
     setCard(
       card.filter((singlePersonCard) => {
         return singlePersonCard.id !== singleCard.id;
