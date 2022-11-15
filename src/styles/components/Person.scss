@@ -1,0 +1,197 @@
+.card-wrapper {
+  &__box {
+    display: flex;
+  }
+}
+.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 24px 24px;
+  gap: 16px;
+  height: 104px;
+  background: $base-color;
+  box-shadow: 0px 3px 8px rgb(0 0 0 / 10%);
+  border-radius: 4px;
+  margin: 20px 0;
+  flex: 50 1 auto;
+  &__left-info {
+    display: flex;
+    flex-direction: row;
+    // flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    color: $gray-900-color;
+    width: 100%;
+    max-width: 29%;
+    &__avatar {
+      border-radius: 50%;
+    }
+  }
+  &__right-info {
+    line-height: 30px;
+    &__icons-wrapper {
+      display: flex;
+      gap: 40px;
+      &--icon {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+    &__availability {
+      display: flex;
+      flex-direction: row;
+      gap: 2px;
+      div {
+        width: 18px;
+        height: 10px;
+        background: $primary-green-color;
+      }
+      div:first-child {
+        border-radius: 8px 0px 0px 8px;
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(248, 248, 248);
+  }
+}
+
+.list {
+  width: 1227px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  &__list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  &__single-card-wrapper {
+    width: 100%;
+  }
+  &__details-card-wrapp {
+    width: 80%;
+    height: 40px;
+  }
+}
+
+.details-box {
+  background: rgb(255, 255, 255);
+  box-shadow: rgb(0 0 0 / 10%) 0px 3px 10px;
+  border-radius: 4px;
+  padding: 17px 20px;
+  margin: 20px 0px 0 20px;
+  color: $gray-600-color;
+  &__details {
+    &__contact {
+      flex: 1 1 50%;
+    }
+    &__employment {
+      flex: 1 1 50%;
+
+      &--type {
+        h3 {
+          margin: 13px 0;
+        }
+      }
+    }
+  }
+
+  &__skills {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__details {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__location {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    &--city {
+      flex: 1 1 50%;
+    }
+    &--onsite {
+      display: flex;
+      align-items: flex-end;
+      flex: 1 1 50%;
+    }
+  }
+  &__close {
+    background-image: url(../../assets/clear2.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    &:hover {
+      background-image: url(../../assets/clear.png);
+    }
+  }
+  &__btn-wrapper {
+    position: absolute;
+    right: 0px;
+  }
+  &__btn {
+    background-color: transparent;
+    padding: 5px 7px;
+    border-radius: 4px;
+    transition: none 0s ease 0s;
+    border: 1px solid $primary-green-color;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    &:hover {
+      text-decoration: none;
+      background-color: rgba(161, 197, 42, 0.04);
+      border: 1px solid $primary-green-color;
+    }
+    &--arrow {
+      height: 24px;
+      width: 24px;
+      background-image: url(../../assets/Forward.png);
+    }
+  }
+  hr {
+    cursor: pointer;
+    margin: 24px 0px;
+    line-height: 1em;
+    position: relative;
+    outline: 0px;
+    border: 0px;
+    font-size: 14px;
+    text-align: center;
+    height: 1.5em;
+    opacity: 0.5;
+  }
+  hr::before {
+    content: "";
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgb(129, 128, 120),
+      transparent
+    );
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+  hr::after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    padding: 0px 0.5em;
+    line-height: 1.5em;
+    color: rgb(134, 135, 133);
+    background-color: rgb(252, 252, 250);
+  }
+}

@@ -1,3 +1,7 @@
+.search-holder{
+  height: 100vh;
+  position: relative;
+}
 .input-wrap {
   max-width: 700px;
   margin: 10% auto 0;
@@ -102,7 +106,11 @@
 }
 
 .select {
-  position: relative;
+  position: absolute;
+  top: calc(6% + 1px);
+  left: 0;
+  right: 0;
+  z-index: 1;
   &__select-wrapper {
     margin: 0 auto;
     padding: 24px;
