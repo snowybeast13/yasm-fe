@@ -1,14 +1,15 @@
 import React, { FC } from "react";
-import { Person } from "../../Models/interfaces";
+import { Employee } from "../../Models/interfaces";
 
 interface ResultsProps {
-  personType: Person[];
-  setUserInput: (user: Person) => void;
+  personType: Employee[];
+  setInput: (employee: Employee) => void;
 }
 
 const ResultsDropdown: FC<ResultsProps> = ({
   personType,
-  setUserInput,
+  // setUserInput,
+  setInput,
 }: ResultsProps): JSX.Element => {
   return (
     <div className="select">
@@ -22,11 +23,11 @@ const ResultsDropdown: FC<ResultsProps> = ({
             <div className="select__select-wrapper__items-wrapper">
               {personType.map((filteredPersons) => (
                 <div
-                  key={filteredPersons.id}
+                  key={filteredPersons.person.id}
                   className="select__select-wrapper__items-wrapper__items"
-                  onClick={() => setUserInput(filteredPersons)}
+                  onClick={() => setInput(filteredPersons)}
                 >
-                  <p>{filteredPersons.name}</p>
+                  <p>{filteredPersons.person.name}</p>
                 </div>
               ))}
             </div>

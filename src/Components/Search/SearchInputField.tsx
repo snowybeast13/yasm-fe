@@ -1,26 +1,24 @@
 import React, { FC } from "react";
-import { Employee, Person } from "../../Models/interfaces";
+import { Employee } from "../../Models/interfaces";
 
 interface PersonProps {
-  persons: Employee[];
   onChangeSearch: (searvhValue: string) => void;
   viewHandler: (value: boolean) => void;
-  inputValueChip: Person[];
-  removeChip: (value: Person) => void;
-  clearInputData: (value: Person[]) => void;
-  search: string;
+  inputValueChip: Employee[];
+  removeChip: (value: Employee) => void;
+  clearInputData: (value: Employee[]) => void;
+  inputRef: any;
+  navigateTo: (value: Employee[]) => void;
 }
 const SearchInputField: FC<PersonProps> = ({
-  persons,
   onChangeSearch,
   viewHandler,
   inputValueChip,
   removeChip,
   clearInputData,
-  search,
+  inputRef,
+  navigateTo,
 }: PersonProps): JSX.Element => {
-  // const inputRef: any = useRef();
-
   return (
     <div>
       <div className="input-wrap">
@@ -29,10 +27,10 @@ const SearchInputField: FC<PersonProps> = ({
             <div className="input-wrap__input-div__chip-wrapper">
               {inputValueChip.map((singleValue) => (
                 <div
-                  key={singleValue.id}
+                  key={singleValue.person.id}
                   className="input-wrap__input-div--chip"
                 >
-                  <p>{singleValue.name}</p>
+                  <p>{singleValue.person.name}</p>
                   <button
                     onClick={() => {
                       removeChip(singleValue);
@@ -48,7 +46,7 @@ const SearchInputField: FC<PersonProps> = ({
             placeholder="Search"
             onChange={(e) => onChangeSearch(e.target.value)}
             onClick={() => viewHandler(true)}
-            value={search}
+            ref={inputRef}
           />
           {inputValueChip.length !== 0 && (
             <div>
@@ -59,7 +57,10 @@ const SearchInputField: FC<PersonProps> = ({
             </div>
           )}
         </div>
-        <button className="input-wrap__button">
+        <button
+          className="input-wrap__button"
+          onClick={() => navigateTo(inputValueChip)}
+        >
           <span className="input-wrap__button--icon"></span>
         </button>
       </div>

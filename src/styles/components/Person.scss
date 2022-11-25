@@ -1,6 +1,7 @@
 .card-wrapper {
   &__box {
     display: flex;
+    position: relative;
   }
 }
 .card {
@@ -43,13 +44,16 @@
       display: flex;
       flex-direction: row;
       gap: 2px;
-      div {
+      &--progress {
         width: 18px;
         height: 10px;
-        background: $primary-green-color;
+        // background: $primary-green-color;
       }
-      div:first-child {
+      &--progress:first-child {
         border-radius: 8px 0px 0px 8px;
+      }
+      &--progress:last-child {
+        border-radius: 0px 8px 8px 0px;
       }
     }
   }
@@ -106,6 +110,15 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &__skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    &--skill {
+      flex: 0 0 30%;
+    }
+  }
+
   &__details {
     display: flex;
     justify-content: space-between;
@@ -193,5 +206,27 @@
     line-height: 1.5em;
     color: rgb(134, 135, 133);
     background-color: rgb(252, 252, 250);
+  }
+}
+// .progress {
+
+// }
+[role="tooltip"],
+.hidetooltip.hidetooltip.hidetooltip + [role="tooltip"] {
+  visibility: hidden;
+  position: absolute;
+  // top: 2rem;
+  // left: 2rem;
+  background: #ececec;
+  height: 100px;
+  width: 320px;
+  top: -13px;
+  border-radius: 6px;
+  border: 1px $gray-900-color;
+}
+
+[aria-labelledby]:hover {
+  [role="tooltip"] {
+    visibility: visible;
   }
 }
