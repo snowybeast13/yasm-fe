@@ -13,7 +13,7 @@ const PersonsList: FC<InputValueProps> = ({
   userInfo,
   cardHandler,
 }: InputValueProps): JSX.Element => {
-  console.log(userInfo)
+  console.log(userInfo);
   return (
     <>
       <div className="card-wrapper__box" key={userInfo.person.id}>
@@ -37,7 +37,7 @@ const PersonsList: FC<InputValueProps> = ({
               </div>
               <div className="card__right-info__icons-wrapper--icon">
                 <img src={locationIcon} alt="location" />
-                <span>Somewhere</span>
+                <span>{userInfo.office.name}</span>
               </div>
               <div className="card__right-info__icons-wrapper--icon">
                 <img src={languagesIcon} alt="languages" />
@@ -47,7 +47,7 @@ const PersonsList: FC<InputValueProps> = ({
             <div className="card__right-info__availability">
               {userInfo.availabilities.map((availability) => (
                 <div
-                className="card__right-info__availability--progress"
+                  className="tooltip card__right-info__availability--progress"
                   key={availability.availability.id}
                   style={
                     availability.percent >= 0 && availability.percent < 40
@@ -59,11 +59,22 @@ const PersonsList: FC<InputValueProps> = ({
                   aria-labelledby="tooltip-info"
                   id={availability.availability.id}
                 >
-                  <div className="tooltip" role="tooltip" id="tooltip-info">
-                  <p>{availability.availability.descriptions}</p>
-
-                    <p>{availability.availability.plannedHours}</p>
-                    <p>{availability.availability.workHours}</p>
+                  <div
+                    className="tooltip-text"
+                    role="tooltip"
+                    id="tooltip-info"
+                    key={availability.availability.id}
+                  >
+                    {availability.availability.descriptions.length !== 0 ? (
+                      <div className="tooltip-text__description">
+                        <p>{availability.availability.descriptions}</p>
+                        <hr />
+                      </div>
+                    ) : null}
+                    <div className="tooltip-text__hours">
+                      <p>Planned: {availability.availability.plannedHours}</p>
+                      <p>Working: {availability.availability.workHours}</p>
+                    </div>
                   </div>
                 </div>
               ))}

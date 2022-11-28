@@ -32,7 +32,9 @@ const PersonDetailsCard: FC<CardProps> = ({ card, closeCard }: CardProps) => {
           {/* Skill list */}
           <div className="details-box__skills-list">
             {uniqueSkills.map((skill) => (
-              <div className="details-box__skills-list--skill">{skill}</div>
+              <div className="details-box__skills-list--skill" key={skill}>
+                {skill}
+              </div>
             ))}
           </div>
           <hr />
