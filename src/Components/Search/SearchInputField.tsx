@@ -8,7 +8,7 @@ interface PersonProps {
   removeChip: (value: Employee) => void;
   clearInputData: (value: Employee[]) => void;
   inputRef: any;
-  navigateTo: (value: Employee[]) => void;
+  navigateTo: () => void
 }
 const SearchInputField: FC<PersonProps> = ({
   onChangeSearch,
@@ -59,7 +59,7 @@ const SearchInputField: FC<PersonProps> = ({
         </div>
         <button
           className="input-wrap__button"
-          onClick={() => navigateTo(inputValueChip)}
+          onClick={() => navigateTo()}
         >
           <span className="input-wrap__button--icon"></span>
         </button>
