@@ -2,65 +2,66 @@ import React, { useEffect, useRef, useState } from "react";
 // import data from "../../data/persons.json";
 import emptyData from "../../data/emptyPersons.json";
 import SearchInputField from "../Search/SearchInputField";
-import { Employee, IResponse, Person } from "../../Models/interfaces";
+import { Employee, IResponse } from "../../Models/interfaces";
 import useDebounce from "../../hooks/useDebounce";
 import ResultsDropdown from "../Search/ResultsDropdown";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-import PersonsList from "../Person/PersonsList";
-import PersonDetailsCard from "../Person/PersonDetailsCard";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import PersonsResults from "../Results/PersonsResults";
 
 const SearchPage = () => {
   const [persons, setPersons] = useState<Employee[]>([]);
-  const [personType, setPersonType] = useState<Person[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [inputValue, setInputValue] = useState<Person[]>([]);
+  const [newInputValue, setNewInputValue] = useState<Employee[]>([]);
+  const [newResults, setNewResults] = useState<Employee[]>([]);
   const [view, setView] = useState<boolean>(false);
-  const [card, setCard] = useState<Person[]>([]);
+  const [card, setCard] = useState<Employee[]>([]);
 
+  // Ref
   const ref: any = useRef();
+  const inputRef: any = useRef();
+
+  //Routing
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { all } = useParams();
 
   //Hooks
   const debouncedSearch = useDebounce(search, 500);
   useOnClickOutside(ref, () => viewHandler(false));
 
+  //All data
+  const allData: Employee[] = (emptyData as IResponse).persons;
+
   //Get all persons
   useEffect(() => {
-    const allData: Employee[] = (emptyData as IResponse).persons;
-    setPersons(allData);
-  }, []);
-
-  //Filtered users to type Person with debounce
-  useEffect(() => {
-    const typePerson = persons.map((person) => person.person);
-
-    const filter = typePerson.filter((person) =>
-      person.name.toLowerCase().includes(debouncedSearch)
+    const filteredEmployees = allData.filter((employee) =>
+      employee.person.name.toLocaleLowerCase().includes(debouncedSearch)
     );
-    if (debouncedSearch) {
-      setPersonType(filter);
-    } else {
-      setPersonType([]);
-    }
-  }, [debouncedSearch, persons]);
+    debouncedSearch ? setPersons(filteredEmployees) : setPersons([]);
+  }, [allData, debouncedSearch]);
 
   //Set search state
   const onChangeSearch = (searchValue: string) => {
     setSearch(searchValue);
   };
 
-  //Set user input
-  const setUserInput = (user: Person) => {
+  //Set chips for input field
+  const setInput = (employee: Employee) => {
     const newData = [];
-    newData.push(...inputValue, user);
-    setInputValue(newData);
+    newData.push(...newInputValue, employee);
+    setNewInputValue(newData);
     setView(false);
 
-    //When clicked on chip, remove it from the list
-    setPersonType(
-      personType.filter((p) => {
-        return p.id !== user.id;
+    //Remove chip from dropdown list when chip is added to input field
+    setPersons(
+      persons.filter((person) => {
+        return person.person.id !== employee.person.id;
       })
     );
+
+    setNewResults(newData);
+    inputRef.current.value = "";
   };
 
   //Hide select dropdown when clicked outside
@@ -69,103 +70,92 @@ const SearchPage = () => {
   };
 
   //Remove Chip
-  const removeChip = (value: Person) => {
-    setInputValue(
-      inputValue.filter((singlePerson) => {
-        return singlePerson.id !== value.id;
+  const removeChip = (value: Employee) => {
+    setNewInputValue(
+      newInputValue.filter((employeeChip) => {
+        return employeeChip.person.id !== value.person.id;
       })
     );
 
     //when clicked on chip return it to the list
-    personType.push(value);
+    persons.push(value);
     setSearch(search);
 
+    //Remove card from result list
     card
-      ? setCard(
-          card.filter((userCard) => {
-            return userCard.id !== value.id;
+      ? setNewResults(
+          newResults.filter((userCard) => {
+            return userCard.person.id !== value.person.id;
           })
         )
-      : setCard([]);
+      : setNewResults([]);
   };
 
   //Clear data from input
-  const clearInputData = (value: Person[]) => {
-    setInputValue([]);
+  const clearInputData = (value: Employee[]) => {
+    setNewInputValue([]);
     const returnPersonToArr = value.filter((rPerson) => {
       return rPerson;
     });
-    personType.push(...returnPersonToArr);
+    persons.push(...returnPersonToArr);
+
     setSearch("");
     setCard([]);
+    setNewResults([]);
   };
 
   //Open details card
-  const cardHandler = (userInfo: Person) => {
+  const cardHandler = (userInfo: Employee) => {
     card ? setCard([userInfo]) : setCard([]);
   };
 
   //Close card
-  const closeCard = (singleCard: Person) => {
+  const closeCard = (singleCard: Employee) => {
     setCard(
       card.filter((singlePersonCard) => {
-        return singlePersonCard.id !== singleCard.id;
+        return singlePersonCard.person.id !== singleCard.person.id;
       })
     );
+  };
+
+  //Navigation
+  const navigateTo = () => {
+    if (newInputValue.length === 0 && pathname !== "/all") {
+      navigate("all");
+      setNewResults(allData);
+    } else if (newInputValue.length !== 0 && pathname !== "/all") {
+      navigate("all");
+      setNewResults(newInputValue);
+    }
   };
 
   return (
     <div className="search-holder">
       {/* //Input Field component */}
       <SearchInputField
-        persons={persons}
         onChangeSearch={onChangeSearch}
         viewHandler={viewHandler}
-        inputValueChip={inputValue}
+        inputValueChip={newInputValue}
         removeChip={removeChip}
         clearInputData={clearInputData}
-        search={search}
+        navigateTo={navigateTo}
+        inputRef={inputRef}
       />
 
       {/* //Dropdown results component */}
       <div ref={ref}>
-        {view && (
-          <ResultsDropdown
-            personType={personType}
-            setUserInput={setUserInput}
-          />
-        )}
+        {view && <ResultsDropdown personType={persons} setInput={setInput} />}
       </div>
 
       {/* List and details card */}
-      <div className="list">
-        {inputValue.map((singleEl) => (
-          <div key={singleEl.id} className="list__list-wrapper">
-            <div className="list__single-card-wrapper">
-              <PersonsList
-                userInfo={singleEl}
-                cardHandler={cardHandler}
-                key={singleEl.id}
-              />
-            </div>
-            {card.length !== 0 && (
-              <div className="list__details-card-wrapp">
-                {card.map((cardSingle) => (
-                  <div>
-                    {singleEl.id === cardSingle.id && (
-                      <PersonDetailsCard
-                        card={singleEl}
-                        closeCard={closeCard}
-                        key={cardSingle.id}
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+      {all ? (
+        <PersonsResults
+          inputValue={newResults}
+          card={card}
+          cardHandler={cardHandler}
+          closeCard={closeCard}
+        />
+      ) : null}
     </div>
   );
 };
