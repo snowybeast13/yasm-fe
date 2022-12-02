@@ -13,7 +13,7 @@ const PersonsList: FC<InputValueProps> = ({
   userInfo,
   cardHandler,
 }: InputValueProps): JSX.Element => {
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <>
       <div className="card-wrapper__box" key={userInfo.person.id}>
@@ -37,7 +37,7 @@ const PersonsList: FC<InputValueProps> = ({
               </div>
               <div className="card__right-info__icons-wrapper--icon">
                 <img src={locationIcon} alt="location" />
-                <span>{userInfo.office.name}</span>
+                <span>{userInfo.office?.name}</span>
               </div>
               <div className="card__right-info__icons-wrapper--icon">
                 <img src={languagesIcon} alt="languages" />
