@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import data from "../../data/persons.json";
-// import emptyData from "../../data/emptyPersons.json";
+// import data from "../../data/persons.json";
+import emptyData from "../../data/emptyPersons.json";
 import SearchInputField from "../Search/SearchInputField";
 import { Employee, IResponse } from "../../Models/interfaces";
 import useDebounce from "../../hooks/useDebounce";
@@ -30,7 +30,7 @@ const SearchPage = () => {
   useOnClickOutside(ref, () => viewHandler(false));
 
   //All data
-  const allData: Employee[] = (data as IResponse).persons;
+  const allData: Employee[] = (emptyData as IResponse).persons;
 
   //Get all persons
   useEffect(() => {
