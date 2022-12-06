@@ -4,7 +4,6 @@ import emptyData from "../../data/emptyPersons.json";
 import SearchInputField from "../Search/SearchInputField";
 import { Employee, IResponse } from "../../Models/interfaces";
 import useDebounce from "../../hooks/useDebounce";
-import ResultsDropdown from "../Search/ResultsDropdown";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PersonsResults from "../Results/PersonsResults";
@@ -39,7 +38,12 @@ const SearchPage = () => {
       employee.person.name.toLocaleLowerCase().includes(debouncedSearch)
     );
     debouncedSearch ? setPersons(filteredEmployees) : setPersons([]);
-  }, [allData, debouncedSearch]);
+
+    //Returning 404 page for non-excisting routes
+    if (pathname !== "/all" && pathname !== "/") {
+      navigate("/404", { replace: true });
+    }
+  }, [allData, debouncedSearch, navigate, pathname]);
 
   //Set search state
   const onChangeSearch = (searchValue: string) => {
@@ -140,22 +144,20 @@ const SearchPage = () => {
         clearInputData={clearInputData}
         navigateTo={navigateTo}
         inputRef={inputRef}
+        setInput={setInput}
+        persons={persons}
+        view={view}
       />
 
-      {/* //Dropdown results component */}
-      <div ref={ref}>
-        {view && <ResultsDropdown personType={persons} setInput={setInput} />}
-      </div>
-
       {/* List and details card */}
-      {all ? (
+      {all && (
         <PersonsResults
           inputValue={newResults}
           card={card}
           cardHandler={cardHandler}
           closeCard={closeCard}
         />
-      ) : null}
+      )}
     </div>
   );
 };
