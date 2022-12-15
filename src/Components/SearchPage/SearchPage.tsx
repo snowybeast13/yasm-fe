@@ -1,14 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-// import data from "../../data/persons.json";
-import emptyData from "../../data/emptyPersons.json";
+import data from "../../data/persons.json";
+// import emptyData from "../../data/emptyPersons.json";
 import SearchInputField from "../Search/SearchInputField";
-import { Employee, IResponse } from "../../Models/interfaces";
+import {
+  Employee,
+  IResponse,
+  SearchResponse,
+  Items,
+  Item,
+} from "../../Models/interfaces";
 import useDebounce from "../../hooks/useDebounce";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PersonsResults from "../Results/PersonsResults";
+// import axios from "axios";
+// import { loginRequest } from "../../authConfig";
+import useAxios from "../../hooks/useAxios";
+
+// console.log(loginRequest);
 
 const SearchPage = () => {
+  const [allResults, setAllResults] = useState<Item[]>([]);
+  const [inputValue, setInputValue] = useState<Item[]>([]);
   const [persons, setPersons] = useState<Employee[]>([]);
   const [search, setSearch] = useState<string>("");
   const [newInputValue, setNewInputValue] = useState<Employee[]>([]);
@@ -28,16 +41,34 @@ const SearchPage = () => {
   //Hooks
   const debouncedSearch = useDebounce(search, 500);
   useOnClickOutside(ref, () => viewHandler(false));
+  const axiosClient = useAxios();
 
   //All data
-  const allData: Employee[] = (emptyData as IResponse).persons;
+  const allData: Employee[] = (data as IResponse).persons;
+
+  const searchAll = async (
+    query: string
+  ): Promise<{ data: SearchResponse }> => {
+    return await axiosClient.get(`/search/all/${query}`);
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await searchAll(debouncedSearch);
+      console.log(response.data);
+      setAllResults(response.data.items);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //Get all persons
   useEffect(() => {
-    const filteredEmployees = allData.filter((employee) =>
-      employee.person.name.toLocaleLowerCase().includes(debouncedSearch)
-    );
-    debouncedSearch ? setPersons(filteredEmployees) : setPersons([]);
+    debouncedSearch ? fetchData() : setAllResults([]);
+    // const filteredEmployees = allData.filter((employee) =>
+    //   employee.person.name.toLocaleLowerCase().includes(debouncedSearch)
+    // );
+    // debouncedSearch ? setPersons(filteredEmployees) : setPersons([]);
 
     //Returning 404 page for non-excisting routes
     if (pathname !== "/all" && pathname !== "/") {
@@ -50,23 +81,52 @@ const SearchPage = () => {
     setSearch(searchValue);
   };
 
-  //Set chips for input field
-  const setInput = (employee: Employee) => {
+  const setInput = (item: Item) => {
     const newData = [];
-    newData.push(...newInputValue, employee);
-    setNewInputValue(newData);
+    newData.push(...inputValue, item);
+    console.log(newData);
+    setInputValue(newData);
     setView(false);
 
     //Remove chip from dropdown list when chip is added to input field
-    setPersons(
-      persons.filter((person) => {
-        return person.person.id !== employee.person.id;
+    setAllResults(
+      allResults.filter((result) => {
+        return result.item.id !== item.item.id;
       })
     );
 
-    setNewResults(newData);
+    // setNewResults(newData);
     inputRef.current.value = "";
+    
+    //API calls depending on type of item
+    if (item.type === "Person") {
+      console.log('Persone------------');
+    } else if(item.type === 'Organization') {
+      console.log("Organization-----------")
+    } else if(item.type === 'Project'){
+      console.log("Project")
+    } else if(item.type === 'Skill') {
+      console.log("Skill---------------------")
+    }
   };
+
+  //Set chips for input field
+  // const setInput = (employee: Item) => {
+  //   const newData = [];
+  //   newData.push(...newInputValue, employee);
+  //   setNewInputValue(newData);
+  //   setView(false);
+
+  //Remove chip from dropdown list when chip is added to input field
+  // setPersons(
+  //   persons.filter((person) => {
+  //     return person.person.id !== employee.person.id;
+  //   })
+  // );
+
+  //   setNewResults(newData);
+  //   inputRef.current.value = "";
+  // };
 
   //Hide select dropdown when clicked outside
   const viewHandler = (value: boolean) => {
@@ -139,7 +199,7 @@ const SearchPage = () => {
       <SearchInputField
         onChangeSearch={onChangeSearch}
         viewHandler={viewHandler}
-        inputValueChip={newInputValue}
+        inputValueChip={inputValue}
         removeChip={removeChip}
         clearInputData={clearInputData}
         navigateTo={navigateTo}
@@ -147,6 +207,7 @@ const SearchPage = () => {
         setInput={setInput}
         persons={persons}
         view={view}
+        res={allResults}
       />
 
       {/* List and details card */}

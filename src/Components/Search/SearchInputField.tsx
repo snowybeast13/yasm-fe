@@ -1,18 +1,19 @@
 import React, { FC, useRef, useState } from "react";
-import { Employee } from "../../Models/interfaces";
+import { Employee, SearchResponse, Item } from "../../Models/interfaces";
 import ResultsDropdown from "./ResultsDropdown";
 
 interface PersonProps {
   onChangeSearch: (searvhValue: string) => void;
   viewHandler: (value: boolean) => void;
-  inputValueChip: Employee[];
+  inputValueChip: Item[];
   removeChip: (value: Employee) => void;
   clearInputData: (value: Employee[]) => void;
   inputRef: any;
   navigateTo: () => void;
-  setInput: (employee: Employee) => void;
+  setInput: (item: Item) => void;
   persons: Employee[];
   view: boolean;
+  res: Item[];
 }
 const SearchInputField: FC<PersonProps> = ({
   onChangeSearch,
@@ -25,9 +26,9 @@ const SearchInputField: FC<PersonProps> = ({
   setInput,
   persons,
   view,
+  res,
 }: PersonProps): JSX.Element => {
   const ref: any = useRef();
-
   return (
     <div>
       <div className="input-wrap">
@@ -36,13 +37,13 @@ const SearchInputField: FC<PersonProps> = ({
             <div className="input-wrap__input-div__chip-wrapper">
               {inputValueChip.map((singleValue) => (
                 <div
-                  key={singleValue.person.id}
+                  key={singleValue.item.id}
                   className="input-wrap__input-div--chip"
                 >
-                  <p>{singleValue.person.name}</p>
+                  <p>{singleValue.item.name}</p>
                   <button
                     onClick={() => {
-                      removeChip(singleValue);
+                      // removeChip(singleValue);
                     }}
                   ></button>
                 </div>
@@ -61,7 +62,7 @@ const SearchInputField: FC<PersonProps> = ({
             <div>
               <button
                 className="input-wrap__clear-button"
-                onClick={() => clearInputData(inputValueChip)}
+                // onClick={() => clearInputData(inputValueChip)}
               ></button>
             </div>
           )}
@@ -73,7 +74,7 @@ const SearchInputField: FC<PersonProps> = ({
 
       {/* //Dropdown results component */}
       <div ref={ref}>
-        {view && <ResultsDropdown personType={persons} setInput={setInput} />}
+        {view && <ResultsDropdown personType={persons} setInput={setInput} items={res} />}
       </div>
 
       <p className="info-text">

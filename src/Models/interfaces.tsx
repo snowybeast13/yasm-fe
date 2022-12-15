@@ -1,3 +1,26 @@
+export interface Items {
+  results: Item[];
+}
+export interface Item2 {
+  objectType: string;
+  id: string;
+  name: string;
+}
+
+export interface Item {
+  score: number;
+  type: string;
+  item: Item2;
+}
+
+export interface SearchResponse {
+  objectType: string;
+  skip: number;
+  limit: number;
+  count: number;
+  items: Item[];
+}
+
 export interface IResponse {
   persons: Employee[];
 }
